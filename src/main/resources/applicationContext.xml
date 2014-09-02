@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+                   http://www.springframework.org/schema/beans		http://www.springframework.org/schema/beans/spring-beans.xsd
+                   http://www.springframework.org/schema/aop		http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+                   http://www.springframework.org/schema/context	http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+	<context:spring-configured />
+
+	<aop:config proxy-target-class="true" />
+
+	<aop:aspectj-autoproxy />
+
+	<context:component-scan base-package="jp.projects.miya.sparql_example">
+		<context:include-filter type="annotation"
+			expression="org.aspectj.lang.annotation.Aspect" />
+	</context:component-scan>
+
+	<context:property-placeholder
+		file-encoding="UTF-8"
+		location="classpath*:log4j.properties" />
+
+	<bean id="DBPediaJpnContext" class="org.twinkql.context.SpringTwinkqlContextFactory" scope="prototype">
+ 		<property name="queryExecutionProvider">
+		 	<bean id="JenaProvider" class="org.twinkql.context.JenaHttpQueryExecutionProvider">
+				<constructor-arg index="0" value="http://ja.dbpedia.org/sparql" type="String" />
+			</bean>
+ 		</property>
+ 		 <property name="configurationFile">
+ 		 	<value>classpath*:configuration.xml</value>
+ 		 </property>
+ 		 <property name="mappingFiles">
+ 		 	<value>classpath*:map.xml</value>
+ 		 </property>
+	</bean>
+
+    <bean id="DBPediaJpnTemplate" class="org.twinkql.template.SpringTwinkqlTemplateFactory">
+        <property name="twinkqlContext" ref="DBPediaJpnContext"/>
+    </bean>
+</beans>

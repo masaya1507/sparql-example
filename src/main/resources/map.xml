@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<sparqlMap namespace="dbpedia_japanese"
+	xmlns="http://twinkql.org"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://twinkql.org/schema/1.0/twinkql.xsd">
+
+	<resultMap id="PrefecturalMap" resultClass="jp.projects.miya.sparql_example.dto.PrefecturalDto">
+		<rowMap var="code" varType="literalValue" beanProperty="areaCode" />
+		<rowMap var="prefecture" varType="localName" beanProperty="name" />
+	</resultMap>
+
+	<select id="SelectJapanesePrefecturals" resultMap="PrefecturalMap">
+		SELECT DISTINCT ?code, ?prefecture
+		WHERE {
+		    ?prefecture dbpedia-owl:country dbpedia-ja:日本;
+		                dbpedia-owl:areaCode ?areacode.
+		    FILTER regex(?areacode, "^[0-9]", "i").
+		    BIND(REPLACE(?areacode, "\\D", "", "i") AS ?code).
+		}
+		ORDER BY ?areacode
+	</select>
+</sparqlMap>
