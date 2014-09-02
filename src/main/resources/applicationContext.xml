@@ -30,7 +30,7 @@
 			</bean>
  		</property>
  		<property name="configurationFile" value="classpath*:sparql/configuration.xml" />
- 		<property name="mappingFiles" value="classpath*:sparql/dbpedia/map.xml" />
+ 		<property name="mappingFiles" value="classpath*:sparql/map-dbpedia_japanese.xml" />
 	</bean>
 
     <bean class="jp.projects.miya.sparql_example.dao.DBPediaJpnPrefetualDao" scope="prototype">
