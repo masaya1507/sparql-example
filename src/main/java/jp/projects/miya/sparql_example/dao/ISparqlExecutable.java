@@ -11,4 +11,8 @@ import java.util.List;
  */
 public interface ISparqlExecutable<T> {
 	public List<T> getResult();
+
+	public String getSelectId();
+
+	public void setSelectId(String id);
 }

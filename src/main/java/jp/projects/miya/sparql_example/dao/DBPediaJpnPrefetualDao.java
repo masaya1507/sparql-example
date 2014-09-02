@@ -2,12 +2,10 @@ package jp.projects.miya.sparql_example.dao;
 
 import java.util.List;
 
-import jp.projects.miya.sparql_example.App;
 import jp.projects.miya.sparql_example.dto.PrefecturalDto;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import org.twinkql.template.TwinkqlTemplate;
 
 /**
@@ -16,17 +14,67 @@ import org.twinkql.template.TwinkqlTemplate;
  * @author masaya1507
  *
  */
-@Component
 public class DBPediaJpnPrefetualDao implements ISparqlExecutable<PrefecturalDto>{
-	/** twinkql template at applicationContext.xml */
-	private static final String TEMPLATE_NAME = "DBPediaJpnTemplate";
-	/** namespace at map.xml */
-	private static final String SPARQL_NAMESPACE = "dbpedia_japanese";
-	/** SPARQL Query at map.xml */
-	private static final String SPARQL_NAME = "SelectJapanesePrefecturals";
 
 	/** slf4j Logger */
 	private static final Logger LOG = LoggerFactory.getLogger(DBPediaJpnPrefetualDao.class);
+
+	/** Namespace at map.xml */
+	private String namespace;
+
+	/** selectId at map.xml */
+	private String selectId;
+
+	/** SPARQL template */
+	private TwinkqlTemplate template;
+
+	/**
+	 *
+	 * @return
+	 */
+	public String getNamespace() {
+		return namespace;
+	}
+
+	/**
+	 *
+	 * @param namespace
+	 */
+	public void setNamespace(String namespace) {
+		this.namespace = namespace;
+	}
+
+	/**
+	 *
+	 * @return
+	 */
+	public TwinkqlTemplate getTemplate() {
+		return template;
+	}
+
+	/**
+	 *
+	 * @param template
+	 */
+	public void setTemplate(TwinkqlTemplate template) {
+		this.template = template;
+	}
+
+	/*
+	 * (非 Javadoc)
+	 * @see jp.projects.miya.sparql_example.dao.ISparqlExecutable#getSelectId()
+	 */
+	public String getSelectId() {
+		return selectId;
+	}
+
+	/*
+	 * (非 Javadoc)
+	 * @see jp.projects.miya.sparql_example.dao.ISparqlExecutable#setSelectId(java.lang.String)
+	 */
+	public void setSelectId(String selectId) {
+		this.selectId = selectId;
+	}
 
 	/*
 	 * (非 Javadoc)
@@ -34,12 +82,9 @@ public class DBPediaJpnPrefetualDao implements ISparqlExecutable<PrefecturalDto>
 	 */
 	@Override
 	public List<PrefecturalDto> getResult() {
-		TwinkqlTemplate template =
-				(TwinkqlTemplate) App.CONTEXT.getBean(DBPediaJpnPrefetualDao.TEMPLATE_NAME);
-
-		List<PrefecturalDto> prefecturals = template.selectForList(
-				DBPediaJpnPrefetualDao.SPARQL_NAMESPACE,
-				DBPediaJpnPrefetualDao.SPARQL_NAME,
+		List<PrefecturalDto> prefecturals = this.template.selectForList(
+				this.getNamespace(),
+				this.getSelectId(),
 				null,
 				PrefecturalDto.class);
 

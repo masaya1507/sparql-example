@@ -25,19 +25,20 @@
 
 	<bean id="DBPediaJpnContext" class="org.twinkql.context.SpringTwinkqlContextFactory" scope="prototype">
  		<property name="queryExecutionProvider">
-		 	<bean id="JenaProvider" class="org.twinkql.context.JenaHttpQueryExecutionProvider">
+		 	<bean class="org.twinkql.context.JenaHttpQueryExecutionProvider">
 				<constructor-arg index="0" value="http://ja.dbpedia.org/sparql" type="String" />
 			</bean>
  		</property>
- 		 <property name="configurationFile">
- 		 	<value>classpath*:configuration.xml</value>
- 		 </property>
- 		 <property name="mappingFiles">
- 		 	<value>classpath*:map.xml</value>
- 		 </property>
+ 		<property name="configurationFile" value="classpath*:configuration.xml" />
+ 		<property name="mappingFiles" value="classpath*:map.xml" />
 	</bean>
 
-    <bean id="DBPediaJpnTemplate" class="org.twinkql.template.SpringTwinkqlTemplateFactory">
-        <property name="twinkqlContext" ref="DBPediaJpnContext"/>
+    <bean class="jp.projects.miya.sparql_example.dao.DBPediaJpnPrefetualDao" scope="prototype">
+     	<property name="template">
+		 	<bean class="org.twinkql.template.SpringTwinkqlTemplateFactory">
+				<property name="twinkqlContext" ref="DBPediaJpnContext"/>
+			</bean>
+ 		</property>
+ 		<property name="namespace" value="dbpedia_japanese" />
     </bean>
 </beans>

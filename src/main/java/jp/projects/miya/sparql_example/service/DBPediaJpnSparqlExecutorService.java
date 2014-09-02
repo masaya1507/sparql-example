@@ -22,6 +22,9 @@ public class DBPediaJpnSparqlExecutorService extends AbstractService {
 	/** slf4j Logger */
 	private static final Logger LOG = LoggerFactory.getLogger(DBPediaJpnSparqlExecutorService.class);
 
+	/** SPARQL map.xml 'selectId' */
+	private static final String SELECT_ID = "SelectJapanesePrefecturals";
+
 	/**
 	 * Constructor
 	 */
@@ -36,6 +39,8 @@ public class DBPediaJpnSparqlExecutorService extends AbstractService {
 	public int execute() throws Exception {
 		ISparqlExecutable<PrefecturalDto> executor =
 				(ISparqlExecutable<PrefecturalDto>) App.CONTEXT.getBean(DBPediaJpnPrefetualDao.class);
+
+		executor.setSelectId(DBPediaJpnSparqlExecutorService.SELECT_ID);
 
 		List<PrefecturalDto> result = executor.getResult();
 
