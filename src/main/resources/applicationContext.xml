@@ -29,8 +29,8 @@
 				<constructor-arg index="0" value="http://ja.dbpedia.org/sparql" type="String" />
 			</bean>
  		</property>
- 		<property name="configurationFile" value="classpath*:sparql/configuration.xml" />
- 		<property name="mappingFiles" value="classpath*:sparql/map-dbpedia_japanese.xml" />
+ 		<property name="configurationFile" value="classpath*:sparql/dbpedia_japanese-config.xml" />
+ 		<property name="mappingFiles" value="classpath*:sparql/dbpedia_japanese-map.xml" />
 	</bean>
 
     <bean class="jp.projects.miya.sparql_example.dao.DBPediaJpnPrefetualDao" scope="prototype">
@@ -41,4 +41,25 @@
  		</property>
  		<property name="namespace" value="dbpedia_japanese" />
     </bean>
+
+<!--
+	<bean id="LinkedMDBContext" class="org.twinkql.context.SpringTwinkqlContextFactory">
+ 		<property name="queryExecutionProvider">
+		 	<bean class="org.twinkql.context.JenaHttpQueryExecutionProvider">
+				<constructor-arg index="0" value="http://www.linkedmdb.org/sparql" type="String" />
+			</bean>
+ 		</property>
+ 		<property name="configurationFile" value="classpath*:sparql/linkedmdb-config.xml" />
+ 		<property name="mappingFiles" value="classpath*:sparql/linkedmdb-map.xml" />
+	</bean>
+
+    <bean class="jp.projects.miya.sparql_example.dao.MovieInfoDao" scope="prototype">
+     	<property name="template">
+		 	<bean class="org.twinkql.template.SpringTwinkqlTemplateFactory">
+				<property name="twinkqlContext" ref="LinkedMDBContext"/>
+			</bean>
+ 		</property>
+ 		<property name="namespace" value="linkedmdb" />
+    </bean>
+ -->
 </beans>
