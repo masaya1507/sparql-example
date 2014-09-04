@@ -22,7 +22,11 @@ public class EntryPoint {
 		AbstractService service = (AbstractService) App.CONTEXT.getBean(DBPediaJpnSparqlExecutorService.class);
 
 		// 実行処理
-		service.execute();
+		int result = service.execute();
+
+		if (result != 0) {
+			throw new IllegalStateException("ExecuteStatus :" + result);
+		}
 	}
 
 }
